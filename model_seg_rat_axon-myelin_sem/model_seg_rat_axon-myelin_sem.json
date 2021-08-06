@@ -1,0 +1,181 @@
+{
+    "command": "train",
+    "gpu_ids": [
+        0
+    ],
+    "path_output": "20210726_log_microscopy_sem",
+    "model_name": "model_seg_rat_axon-myelin_sem",
+    "debugging": true,
+    "log_file": "log",
+    "object_detection_params": {
+        "object_detection_path": null,
+        "safety_factor": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "gpu_ids": 0,
+        "path_output": "20210726_log_microscopy_sem"
+    },
+    "loader_parameters": {
+        "path_data": [
+            "../data_example_microscopy_sem"
+        ],
+        "subject_selection": {
+            "n": [],
+            "metadata": [],
+            "value": []
+        },
+        "target_suffix": [
+            "_seg-axon-manual",
+            "_seg-myelin-manual"
+        ],
+        "extensions": [
+            ".png"
+        ],
+        "roi_params": {
+            "suffix": null,
+            "slice_filter_roi": null
+        },
+        "contrast_params": {
+            "training_validation": [
+                "SEM"
+            ],
+            "testing": [
+                "SEM"
+            ],
+            "balance": {}
+        },
+        "slice_filter_params": {
+            "filter_empty_mask": false,
+            "filter_empty_input": true
+        },
+        "slice_axis": "axial",
+        "multichannel": false,
+        "soft_gt": false,
+        "is_input_dropout": false,
+        "bids_config": "ivadomed/config/config_bids.json"
+    },
+    "split_dataset": {
+        "fname_split": null,
+        "random_seed": 6,
+        "split_method": "sample_id",
+        "data_testing": {
+            "data_type": null,
+            "data_value": []
+        },
+        "balance": null,
+        "train_fraction": 0.7,
+        "test_fraction": 0.1
+    },
+    "training_parameters": {
+        "batch_size": 4,
+        "loss": {
+            "name": "DiceLoss"
+        },
+        "training_time": {
+            "num_epochs": 200,
+            "early_stopping_patience": 50,
+            "early_stopping_epsilon": 0.001
+        },
+        "scheduler": {
+            "initial_lr": 0.001,
+            "lr_scheduler": {
+                "name": "CosineAnnealingLR",
+                "base_lr": 1e-05,
+                "max_lr": 0.01
+            }
+        },
+        "balance_samples": {
+            "applied": false,
+            "type": "gt"
+        },
+        "mixup_alpha": null,
+        "transfer_learning": {
+            "retrain_model": null,
+            "retrain_fraction": 1.0,
+            "reset": true
+        }
+    },
+    "default_model": {
+        "name": "Unet",
+        "dropout_rate": 0.3,
+        "bn_momentum": 0.1,
+        "depth": 4,
+        "is_2d": true,
+        "final_activation": "sigmoid",
+        "length_2D": [
+            512,
+            512
+        ],
+        "stride_2D": [
+            500,
+            500
+        ]
+    },
+    "uncertainty": {
+        "epistemic": false,
+        "aleatoric": false,
+        "n_it": 0
+    },
+    "postprocessing": {
+        "binarize_maxpooling": {}
+    },
+    "evaluation_parameters": {},
+    "transformation": {
+        "Resample": {
+            "wspace": 0.0001,
+            "hspace": 0.0001
+        },
+        "RandomAffine": {
+            "degrees": 5,
+            "scale": [
+                0.1,
+                0.1
+            ],
+            "translate": [
+                0.03,
+                0.03
+            ],
+            "applied_to": [
+                "im",
+                "gt"
+            ],
+            "dataset_type": [
+                "training"
+            ]
+        },
+        "ElasticTransform": {
+            "alpha_range": [
+                28.0,
+                30.0
+            ],
+            "sigma_range": [
+                3.5,
+                4.5
+            ],
+            "p": 0.1,
+            "applied_to": [
+                "im",
+                "gt"
+            ],
+            "dataset_type": [
+                "training"
+            ]
+        },
+        "NormalizeInstance": {
+            "applied_to": [
+                "im"
+            ]
+        }
+    },
+    "training_sha256": {
+        "sub-rat7_sample-Maxo03img60_SEM.png": "952014851a21ad3cce229d8ba72ea935ad762bbe3bfb48e5f5b972971f57f566",
+        "sub-rat6_sample-data15_SEM.png": "200025eda35c6f5264b37f2a5a1d361ecc2c613409d1e03d0abc3a1bc612df8c",
+        "sub-rat4_sample-data12_SEM.png": "d121f05fe9f03458b4dd9a9e4f0fdeba64e5cbd97ec4584415931144e012b764",
+        "sub-rat1_sample-data1_SEM.png": "c93a2cfc720984f8d32827d765bfbee9e5d0b23240774a93373a2c05c8abe342",
+        "sub-rat3_sample-data11_SEM.png": "a3fac42bb940fe20371167bc64bae94e47f8551dd699357122c161b39d9fa9e1",
+        "sub-rat5_sample-data14_SEM.png": "40641767abf2dc5a6940c9e42e17e2e0ca7a4bfddca50016302c99a0515ba8ca",
+        "sub-rat3_sample-data10_SEM.png": "d402873851fa675b0bbaeff8ab752e92e0b8159834f416c4428f78a15883f5ce"
+    }
+}
